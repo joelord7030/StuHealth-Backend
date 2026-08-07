@@ -1,0 +1,78 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum MessageRole {
+  user
+  assistant
+  system
+}
+
+enum MessageStatus {
+  pending
+  streaming
+  completed
+  error
+}
+
+model User {
+  id       String  @id @default(uuid())
+
+  email    String  @unique
+
+  password String
+
+  name     String?
+
+
+  // Password reset fields
+  resetToken String?
+
+  resetTokenExpiry DateTime?
+
+
+  createdAt DateTime @default(now())
+
+
+  conversations Conversation[]
+}
+
+model Conversation {
+  id    String @id @default(uuid())
+  title String
+  model String @default("llama-3.3-70b-versatile")
+
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id])
+
+  messages Message[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Message {
+  id String @id @default(uuid())
+
+  role String
+
+  status String @default("completed")
+
+  content String
+
+  conversationId String
+
+  // File attachment fields
+  fileName String?
+  filePath String?
+  fileType String?
+  fileSize Int?
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+}
