@@ -10,18 +10,36 @@ const authRoutes = require("./routes/auth.routes");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://stuhealth-frontend-ww-r-ashen.vercel.app",
+    ],
+    credentials: true,
+  })
+);
+
 app.use(express.json());
 
 
-// Serve uploaded files statically
+// Health check
+app.get("/", (req, res) => {
+  res.json({
+    status: "success",
+    message: "StuHealth API is running",
+  });
+});
+
+
+// Serve uploaded files
 app.use(
   "/uploads",
   express.static(path.join(__dirname, "uploads"))
 );
 
 
-// Register routes
+// Routes
 app.use("/api/auth", authRoutes);
 
 app.use("/api/chat", chatRoutes);

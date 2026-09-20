@@ -6,7 +6,7 @@ const client = new Groq({
 
 async function streamResponse({
   messages,
-  model = "llama-3.3-70b-versatile",
+  model = "openai/gpt-oss-120b",
   onToken,
 }) {
   const stream = await client.chat.completions.create({

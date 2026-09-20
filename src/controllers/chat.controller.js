@@ -35,7 +35,7 @@ exports.sendMessage = async (req, res) => {
 
           model:
             model ||
-            "llama-3.3-70b-versatile",
+            "openai/gpt-oss-120b",
         },
       });
 
@@ -270,7 +270,7 @@ ${message}
 
       model:
         model ||
-        "llama-3.3-70b-versatile",
+        "openai/gpt-oss-120b",
 
 
       onToken(token) {
