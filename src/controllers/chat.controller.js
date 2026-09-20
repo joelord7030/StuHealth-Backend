@@ -33,9 +33,7 @@ exports.sendMessage = async (req, res) => {
             file?.filename ||
             "Untitled",
 
-          model:
-            model ||
-            "openai/gpt-oss-120b",
+         model: "openai/gpt-oss-120b",
         },
       });
 
@@ -268,9 +266,7 @@ ${message}
     await streamResponse({
       messages,
 
-      model:
-        model ||
-        "openai/gpt-oss-120b",
+      model: "openai/gpt-oss-120b",
 
 
       onToken(token) {
